@@ -6,7 +6,7 @@ use File::Binary;
 use Math::Complex;
 use vars qw($VERSION);
 
-$VERSION   = '0.01';
+$VERSION   = '0.02';
 
 
 my %_set_handlers = (
@@ -92,7 +92,6 @@ sub new {
 
 
 
-
 =head2 load
 
 Returns the next data structure from the marshalled file or undef.
@@ -119,6 +118,8 @@ Takes a ref to an array or a hash or a number or string and pickles it.
 Structures may be nested.
 
 =cut
+
+
 
 sub dump {
         my $self = shift;
@@ -357,8 +358,25 @@ sub _type {
 
 }
 
+=head1 NOTES
 
+=head2 Complex numbers
 
+Python has inbuilt support form complex numbers whilst Perl 
+provides it through the core module C<Math::Complex>. Unserialising 
+a Python complex number will return a C<Math::Complex> object 
+and, as you'd expect, serialising something that ISA C<Math::Complex>
+will result in a serialised Python complex number.
+
+=head2 None
+
+Python has C<None> objects, similar to Perl's C<undef>. 
+
+Because I<load> indictaes "no more objects" by returning C<undef>
+we have to return C<Python::Serialise::None> objects. However dump can 
+take C<undef> and serialise it as a C<None> object.
+
+=cut
 
 =head1 BUGS
 
@@ -410,8 +428,8 @@ kill your friends, burn your house and bring about the apocalypse.
 
 =head1 SEE ALSO
 
-http://www.python.org, L<YAML>, L<File::Binary> and the RESOURCES file in 
-this distribution.
+http://www.python.org, L<YAML>, L<File::Binary>, L<Math::Complex> 
+and the RESOURCES file in this distribution.
 
 =cut
 

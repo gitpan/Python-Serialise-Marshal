@@ -47,6 +47,23 @@ METHODS
 
     Closes the current file.
 
+NOTES
+  Complex numbers
+
+    Python has inbuilt support form complex numbers whilst Perl provides it
+    through the core module `Math::Complex'. Unserialising a Python complex
+    number will return a `Math::Complex' object and, as you'd expect,
+    serialising something that ISA `Math::Complex' will result in a
+    serialised Python complex number.
+
+  None
+
+    Python has `None' objects, similar to Perl's `undef'.
+
+    Because *load* indictaes "no more objects" by returning `undef' we have
+    to return `Python::Serialise::None' objects. However dump can take
+    `undef' and serialise it as a `None' object.
+
 BUGS
     Much less than my `Pickle' module because this is a *much* saner file
     format.
